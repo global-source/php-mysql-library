@@ -14,6 +14,7 @@ class DB
 
     /**
      * functions constructor.
+     * Basic DB Connection Setup.
      */
     public function __construct()
     {
@@ -21,7 +22,9 @@ class DB
         $pdo = new PDO('mysql:host=' . HOST . ';dbname=' . DB, USER, PWD);
     }
 
-    /**
+    /** 
+     * To Pluck Specific Column in the Row.
+     *
      * @param $pluck
      * @param $arr
      * @return array
@@ -46,6 +49,8 @@ class DB
     }
 
     /**
+     * To Check, the element is exist or not.
+     * 
      * @param $table
      * @param $arr
      * @return bool
@@ -66,8 +71,7 @@ class DB
         }
         return ($stmt->rowCount() > 0) ? $stmt->rowCount() : false;
     }
-
-    // WHERE
+    
     /**
      * @param $arr
      * @return array|bool
