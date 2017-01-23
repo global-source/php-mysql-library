@@ -22,7 +22,7 @@ class DB
         $pdo = new PDO('mysql:host=' . HOST . ';dbname=' . DB, USER, PWD);
     }
 
-    /** 
+    /**
      * To Pluck Specific Column in the Row.
      *
      * @param $pluck
@@ -50,7 +50,7 @@ class DB
 
     /**
      * To Check, the element is exist or not.
-     * 
+     *
      * @param $table
      * @param $arr
      * @return bool
@@ -71,7 +71,7 @@ class DB
         }
         return ($stmt->rowCount() > 0) ? $stmt->rowCount() : false;
     }
-    
+
     /**
      * @param $arr
      * @return array|bool
@@ -215,7 +215,6 @@ class DB
         $stmt->execute(array(strtolower($data)));
         return ($stmt->rowCount() > 0) ? $stmt->fetchAll(PDO::FETCH_OBJ) : false;
     }
-
     // FETCH RECORD
     /**
      * @param $table
@@ -275,7 +274,6 @@ class DB
         $arr = array($field => $data);
         return $this->FetchRecord($table, $arr);
     }
-
     // FETCH ALL RECORD
     /**
      * @param $query
@@ -289,7 +287,6 @@ class DB
         (is_null($data)) ? $stmt->execute() : $stmt->execute($data);
         return ($stmt->rowCount() > 0) ? $stmt->fetchAll(PDO::FETCH_OBJ) : false;
     }
-
     // INSERT RECORD
     /**
      * @param $table
@@ -360,7 +357,6 @@ class DB
         $stmt->execute(array($data));
         return ($stmt->rowCount() > 0) ? true : false;
     }
-
     // INSERT & UPDATE RECORD
     /**
      * @param $query
@@ -385,7 +381,6 @@ class DB
         $stmt = $pdo->prepare($query);
         return $stmt->execute($data);
     }
-
     // FIND LAST INSERT ID
     /**
      * @param $query
@@ -399,7 +394,6 @@ class DB
         $stmt->execute($data);
         return $pdo->lastInsertId();
     }
-
     // QUERY RECORD
     /**
      * @param $query
@@ -411,8 +405,9 @@ class DB
         return $pdo->query($query);
     }
 
-    // CHECK RECORD
     /**
+     * To Check record, as its Available or Not.
+     *
      * @param $query
      * @param $data
      * @return bool
@@ -475,9 +470,10 @@ class DB
 
     /**
      * @param $Data
+     * @param $table
      * @return bool
      */
-    public function ARR_GetRecords($Data)
+    public function ARR_GetRecords($Data, $table)
     {
         # $fields Not Required
         # $order Not Required
@@ -577,11 +573,11 @@ class DB
         return ($stmt->rowCount() > 0) ? $stmt->fetchAll(PDO::FETCH_ASSOC) : false;
     }
 
-
-* @param $arr
-* @param $table
-* @return bool
-*/
+    /**
+     * @param $arr
+     * @param $table
+     * @return bool
+     */
     public function InsertDataProcess($arr, $table)
     {
         global $pdo;
@@ -628,6 +624,8 @@ class DB
     }
 
     /**
+     * To Update the data.
+     *
      * @param $arr
      * @param $table
      * @param null $where
@@ -654,13 +652,14 @@ class DB
         return ($stmt->rowCount() > 0) ? $stmt->rowCount() : false;
     }
 
-    // INSERT DATA ARRANGMENTS
     /**
-     * @param $table
-     * @param $ins_arr
-     * @return array
+     * To Preparing the query for data insertion.
+     *
+     * @param $table String the table to process.
+     * @param $ins_arr array INSERT data.
+     * @return array processed insert query data.
      */
-    public function InsertData($table, $ins_arr)
+    public function InsertDataPrepare($table, $ins_arr)
     {
         $num = 1;
         $field = '';
@@ -680,8 +679,10 @@ class DB
     }
 
     /**
-     * @param $value
-     * @return array
+     * To Format the Money value.
+     *
+     * @param $value String | Int Value with String [ex. 5,00,000]
+     * @return array Formatted Value.
      */
     public function ChangeAmount_Format($value)
     {
@@ -691,7 +692,9 @@ class DB
     }
 
     /**
-     * @return int
+     * To Check the type of device is used.
+     *
+     * @return String Device Type.
      */
     public function check_device()
     {
