@@ -1,15 +1,11 @@
 <?php
 
-namespace App;
-
-use Illuminate\Database\Eloquent\Model;
-use Psy\Test\Exception\RuntimeExceptionTest;
-
+namespace PDO;
 /**
  * Class PDO
  * @package App
  */
-class PDO extends Model
+class PDO
 {
 
     /**
@@ -30,9 +26,8 @@ class PDO extends Model
      * PDO constructor.
      * @param array $attributes
      */
-    public function __construct(array $attributes = [])
+    public function __construct()
     {
-        parent::__construct($attributes);
         $this->dbConnect();
     }
 
@@ -48,12 +43,6 @@ class PDO extends Model
                 $this->db = new \PDO('mysql:host=' . self::DB_SERVER . ';dbname=' . self::DB, self::DB_USER, self::DB_PASSWORD);
                 $this->db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             }
-            // Testing.
-//            $records = $this->db->prepare("select * FROM tp_users");
-//            $records->execute();
-//            $row = $records->fetchAll(\PDO::FETCH_ASSOC);
-//            dd($row);
-
         } catch (\PDOException $e) {
             echo 'ERROR: ' . $e->getMessage();
             die();
@@ -84,6 +73,8 @@ class PDO extends Model
     }
 
     /**
+     * Directly insert into the table.
+     *
      * @param $table
      * @param $inputs
      * @return bool
